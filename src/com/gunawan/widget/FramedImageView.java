@@ -76,7 +76,7 @@ public class FramedImageView extends ImageView {
 		Canvas canvas = new Canvas(output);
 
 		RectF outerRect = new RectF(0, 0, size, size);
-		float cornerRadius = size / 10f;
+		float cornerRadius = size / 18f;
 
 		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paint.setColor(Color.RED);
@@ -90,25 +90,42 @@ public class FramedImageView extends ImageView {
 		imageDrawable.draw(canvas);
 		canvas.restore();
 
-		// FRAME
+		// FRAMING THE PHOTO
 		float border = size / 15f;
 
-		Bitmap output1 = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-		Canvas framedCanvas = new Canvas(output1);
+		// 1. Create offscreen bitmap link: http://www.youtube.com/watch?feature=player_detailpage&v=jF6Ad4GYjRU#t=1035s
+		Bitmap framedOutput = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+		Canvas framedCanvas = new Canvas(framedOutput);
+		// End of Step 1
 
+		// Start - TODO IMPORTANT - this section shouldn't be included in the final code
+		// It's needed here to differentiate step 2 (red) with the background color of the activity
+		// It's should be commented out after the codes includes step 3 onwards
+		// Paint squaredPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		// squaredPaint.setColor(Color.BLUE);
+		// framedCanvas.drawRoundRect(outerRect, 0f, 0f, squaredPaint);
+		// End
+
+		// 2. Draw an opaque rounded rectangle link:
+		// http://www.youtube.com/watch?feature=player_detailpage&v=jF6Ad4GYjRU#t=1044s
 		RectF innerRect = new RectF(border, border, size - border, size - border);
 
 		Paint innerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		innerPaint.setColor(Color.RED);
 		framedCanvas.drawRoundRect(innerRect, cornerRadius, cornerRadius, innerPaint);
 
+		// 3. Set the Power Duff mode link:
+		// http://www.youtube.com/watch?feature=player_detailpage&v=jF6Ad4GYjRU#t=1056s
 		Paint outerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		outerPaint.setColor(Color.argb(100, 0, 0, 0));
 		outerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
 
+		// 4. Draw a translucent rounded rectangle link:
+		// http://www.youtube.com/watch?feature=player_detailpage&v=jF6Ad4GYjRU
+		outerPaint.setColor(Color.argb(100, 0, 0, 0));
 		framedCanvas.drawRoundRect(outerRect, cornerRadius, cornerRadius, outerPaint);
 
-		canvas.drawBitmap(output1, 0f, 0f, null);
+		// 5. Draw the frame on top of original bitmap
+		canvas.drawBitmap(framedOutput, 0f, 0f, null);
 
 		framedPhoto = output;
 	}

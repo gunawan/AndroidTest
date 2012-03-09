@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:label="Framed Image View Test"
-            android:name=".activity.FramedImageViewActivity" >
+            android:name=".activity.FramedImageViewActivity"
+            android:theme="@android:style/Theme.Light" >
         </activity>
         <activity
             android:label="Loader Test"
