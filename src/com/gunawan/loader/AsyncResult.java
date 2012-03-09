@@ -1,4 +1,4 @@
-package com.test;
+package com.gunawan.loader;
 
 public class AsyncResult<D> {
 	private Exception exception;

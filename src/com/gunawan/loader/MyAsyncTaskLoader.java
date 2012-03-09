@@ -1,7 +1,8 @@
-package com.test;
+package com.gunawan.loader;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;

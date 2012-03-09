@@ -1,7 +1,6 @@
-package com.test;
+package com.gunawan.activity;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,19 +8,28 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.widget.Toast;
 
-public class TestActivity extends FragmentActivity {
-	/** Called when the activity is first created. */
+import com.gunawan.R;
+import com.gunawan.loader.AsyncResult;
+import com.gunawan.loader.MyAsyncTaskLoader;
+
+/**
+ * @author gunawandeng
+ * 
+ */
+public class LoaderActivity extends FragmentActivity {
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.activity_loader);
+
 	}
 
 	private final LoaderCallbacks<AsyncResult<List<String>>> loaderCallbacks = new LoaderCallbacks<AsyncResult<List<String>>>() {
 
 		@Override
 		public Loader<AsyncResult<List<String>>> onCreateLoader(int id, Bundle args) {
-			MyAsyncTaskLoader loader = new MyAsyncTaskLoader(TestActivity.this);
+			MyAsyncTaskLoader loader = new MyAsyncTaskLoader(LoaderActivity.this);
 			loader.setUpdateThrottle(1000);
 
 			return loader;
@@ -32,7 +40,7 @@ public class TestActivity extends FragmentActivity {
 
 			Exception exception = result.getException();
 			if (exception != null) {
-				Toast.makeText(TestActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoaderActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
 			} else {
 				// process the result
 			}
